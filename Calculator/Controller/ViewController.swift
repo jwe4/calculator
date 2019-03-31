@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
-    
+
     
     private var isFinishedTypingNumber: Bool = true
     
@@ -34,18 +34,11 @@ class ViewController: UIViewController {
         isFinishedTypingNumber = true
         
         if let calcMethod = sender.currentTitle {
-            switch calcMethod {
-            case "+/-":
-                displayValue *= -1
-            case "AC":
-                displayValue = 0
-//                displayLabel.text = String(0)
-            case "%":
-//                displayLabel.text = String(displayValue/100)
-                displayValue *= 0.01
-            default:
-                print("unexpected")
+            guard let result = CalculatorLogic(number: displayValue).calculate(symbol: calcMethod) else {
+                fatalError("calculate method did not work")
             }
+            displayValue = result
+
         }
     }
     
@@ -66,8 +59,7 @@ class ViewController: UIViewController {
                     }
                 }
                 displayLabel.text = displayLabel.text! + numValue
-//                displayValue += numValue
-                
+            
             }
         }
         
